@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+	<style type="text/css">
+		.big {
+			background: white;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		.num {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		.content {
+			width: 100%;
+			/*水平居中*/
+			height: 100%;
+			text-align: center;
+			/*偏移*/
+			display: table-cell;
+			vertical-align: middle;
+		}
+
+		.tag {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			text-align: justify;
+			font-size: 70px;
+		}
+	</style>
+	<meta charset="utf-8" />
+	<title>图片插入html 在线演示 www.divcss5.com</title>
+</head>
+
+<body onload="init()">
+
+	<div class="big" id="f">
+		<img id="picture" src="./movies/1.jpg" width="100%" height="100%" />
+	</div>
+	<div style="position:absolute; left:80%; top:50%; background-color:white;font-size:100px;color:red" class="num"
+		id="index" width="80px" height="80px"> 1
+	</div>
+	<img style="position:absolute; left:80%; top:70%;" class="num" id="picts" src="眼睛_显示.png" width="120px"
+		height="120px" onclick="show()" />
+	<img style="position:absolute; left:80%; top:90%;" class="num" id="picts" src="箭头2_右.png" width="80px" height="80px"
+		onclick="next()" />
+</body>
+
+<script>
+	var index = 1;
+	var len = 4;
+	var maxpic = 22;
+	function hide(id) {
+		var img = document.getElementById(id);
+		img.style.display = 'none';
+	}
+
+	function next() {
+		var pic = document.getElementById("picture");
+		index = index + 1;
+		if (index <= maxpic) {
+			var max = len * len;
+			var src = './movies/' + index + ".jpg";
+			pic.setAttribute("src", src);
+			for (i = 1; i <= max; i++) {
+				var id = "img".concat(i);
+				var num = document.getElementById(id);
+				num.style.display = '';
+			}
+			var n = document.getElementById("index");
+			n.innerText = (index);
+		}
+	}
+
+	function show() {
+		var max = len * len;
+		for (i = 1; i <= max; i++) {
+			var id = "img".concat(i);
+			var num = document.getElementById(id);
+			num.style.display = 'none';
+		}
+	}
+
+	function init() {
+		var pic = document.getElementById("f");
+		for (i = 1; i <= len; i++) {
+			for (j = 1; j <= len; j++) {
+				var div = document.createElement("div");
+				div.style.position = 'absolute';
+				div.style.display = '';
+				div.style.backgroundColor = "#99CCCC";
+				div.style.left = (j - 1) * 100 / len + '%';
+				div.style.top = (i - 1) * 100 / len + '%';
+				div.style.width = 100 / len + '%';
+				div.style.height = 100 / len + '%';
+				div.style.border = '1px solid #FFCCCC';
+				div.setAttribute("id", 'img' + ((i - 1) * len + j));
+				div.setAttribute("onclick", "hide('" + 'img' + ((i - 1) * len + j) + "')");
+				var s = document.createElement("span");
+				s.setAttribute("class", 'tag');
+				s.innerText = ((i - 1) * len + j);
+				s.style.color = 'white';
+				div.appendChild(s);
+				pic.appendChild(div);
+			}
+		}
+	}
+</script>
+
+</html>
